@@ -23,17 +23,19 @@ func main() {
 	fmt.Println(case3)
 
 	// case #4
-	case4_1 := numeralIntoWords("5:01") // with parameter: string
-	case4_2 := _getWords(5, 28)         // with parameters: hour and minute
-	case4_3 := _getWords(5, 60)         // wrong time format
+	case4_1 := timeToWords("5:01")      // with parameter: string
+	case4_2 := _numeralIntoWords(5, 28) // with parameters: hour and minute
+	case4_4 := timeToWords("5:60")      // wrong time format
+	case4_3 := _numeralIntoWords(5, 60) // wrong time format
 	fmt.Println(case4_1)
 	fmt.Println(case4_2)
 	fmt.Println(case4_3)
+	fmt.Println(case4_4)
 }
 
-func numeralIntoWords(time string) string {
+func timeToWords(time string) string {
 	hour, minute := _sanitizeTime(time)
-	return _getWords(hour, minute)
+	return _numeralIntoWords(hour, minute)
 }
 
 func _sanitizeTime(time string) (int, int) {
@@ -46,17 +48,15 @@ func _sanitizeTime(time string) (int, int) {
 	return hour, minute
 }
 
-func _getWords(hour, minute int) string {
-	fmt.Println(hour, minute)
+func _numeralIntoWords(hour, minute int) string {
 	var result, spell string
 	validMinute := true
 	finalHour := _numberToWord(hour)
 	finalMinute := _numberToWord(minute)
-	if minute >= 60 {
+	if hour >= 24 || minute >= 60 {
 		validMinute = false
 		return "Wrong Time Format case #4"
 	}
-
 	if validMinute && minute == 0 {
 		spell = " O'clock"
 		result = finalHour + spell
